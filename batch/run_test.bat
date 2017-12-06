@@ -1,0 +1,1 @@
+call ..\test\build\release\test.exe /console > ..\test\test_result.txt
