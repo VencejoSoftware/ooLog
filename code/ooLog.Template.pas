@@ -30,9 +30,7 @@ type
     function Build: String; overload;
     function TagList: ILogTemplateTagList;
     function ScapeList: IScapeTranslateList;
-
     constructor Create(const Template: String; const TextMatch: ITextMatch);
-
     class function New(const Template: String; const TextMatch: ITextMatch): ILogTemplate;
   end;
 

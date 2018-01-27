@@ -32,6 +32,7 @@ type
     _ComputerName, _UserName, _LocalIP: String;
     _LogTemplateTagList: ITemplateTagList;
   private
+    function GetTagAppTitle(const Callback: IParserCallback): String;
     function GetTagApp(const Callback: IParserCallback): String;
     function GetTagAppPath(const Callback: IParserCallback): String;
     function GetTagDate(const Callback: IParserCallback): String;
@@ -53,7 +54,6 @@ type
     function GetTagLowerText(const Callback: IParserCallback): String;
     function GetTagText(const Callback: IParserCallback): String;
     function GetTagLogLevel(const Callback: IParserCallback): String;
-
     procedure CreateTags;
     procedure LoadOSInfo;
   public
@@ -61,12 +61,9 @@ type
     function Add(const Item: IParserVariable): Integer;
     function Count: Integer;
     function Item(const Index: Integer): IParserVariable;
-
     procedure Clear;
     procedure UpdateDynamicTags(const Text: String; const LogLevel: TLogLevel);
-
     constructor Create;
-
     class function New: ILogTemplateTagList;
   end;
 
@@ -157,9 +154,14 @@ begin
   Result := FormatDateTime('ZZZ', Time);
 end;
 
-function TLogTemplateTagList.GetTagApp(const Callback: IParserCallback): String;
+function TLogTemplateTagList.GetTagAppTitle(const Callback: IParserCallback): String;
 begin
   Result := Application.Title;
+end;
+
+function TLogTemplateTagList.GetTagApp(const Callback: IParserCallback): String;
+begin
+  Result := Application.Name;
 end;
 
 function TLogTemplateTagList.GetTagPC(const Callback: IParserCallback): String;
@@ -243,6 +245,7 @@ begin
   Add(TParserVariable.New('Second', TParserCallback.New(GetTagSecond)));
   Add(TParserVariable.New('MiliSecond', TParserCallback.New(GetTagMiliSecond)));
   Add(TParserVariable.New('App', TParserCallback.New(GetTagApp)));
+  Add(TParserVariable.New('AppTitle', TParserCallback.New(GetTagAppTitle)));
   Add(TParserVariable.New('PC', TParserCallback.New(GetTagPC)));
   Add(TParserVariable.New('User', TParserCallback.New(GetTagUser)));
   Add(TParserVariable.New('IP', TParserCallback.New(GetTagIP)));

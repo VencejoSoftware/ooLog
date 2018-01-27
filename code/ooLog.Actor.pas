@@ -16,10 +16,10 @@ type
     ['{8C88DA51-EC30-42AD-8CEE-B0731926E110}']
     function LogEnabled: Boolean;
     function Logger: ILogger;
-
     procedure LogDebug(const Text: String);
     procedure LogInfo(const Text: String);
     procedure LogError(const Error: Exception; const RaiseException: Boolean);
+    procedure LogErrorText(const Text: String);
     procedure LogWarning(const Text: String);
   end;
 
@@ -31,14 +31,12 @@ type
   public
     function LogEnabled: Boolean;
     function Logger: ILogger;
-
     procedure LogDebug(const Text: String);
     procedure LogInfo(const Text: String);
     procedure LogError(const Error: Exception; const RaiseException: Boolean);
+    procedure LogErrorText(const Text: String);
     procedure LogWarning(const Text: String);
-
     constructor Create(const Logger: ILogger); virtual;
-
     class function New(const Logger: ILogger): ILogActor;
   end;
 
@@ -80,6 +78,11 @@ begin
   WriteLog(Error.Message, TLogLevel.Error);
   if RaiseException then
     raise ExceptClass(Error.ClassType).Create(Error.Message);
+end;
+
+procedure TLogActor.LogErrorText(const Text: String);
+begin
+  WriteLog(Text, TLogLevel.Error);
 end;
 
 constructor TLogActor.Create(const Logger: ILogger);
