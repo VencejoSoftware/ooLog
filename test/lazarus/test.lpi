@@ -27,7 +27,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;..\..\..\ooBatch\code;..\..\..\ooOS\code;..\..\..\ooParser\code;..\..\..\ooTemplateParser\code;..\..\..\ooText\code;..\..\..\ooScapeTranslate\code;..\..\code;..\code"/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$(delphiooLib)\ooBatch\code;$(delphiooLib)\ooOS\code;$(delphiooLib)\ooParser\code;$(delphiooLib)\ooTemplateParser\code;$(delphiooLib)\ooText\code;$(delphiooLib)\ooScapeTranslate\code;..\..\code;..\code"/>
             <UnitOutputDirectory Value="..\build\debug"/>
           </SearchPaths>
           <Parsing>
@@ -66,7 +66,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;..\..\..\ooBatch\code;..\..\..\ooOS\code;..\..\..\ooParser\code;..\..\..\ooTemplateParser\code;..\..\..\ooText\code;..\..\..\ooScapeTranslate\code;..\..\code;..\code"/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$(delphiooLib)\ooBatch\code;$(delphiooLib)\ooOS\code;$(delphiooLib)\ooParser\code;$(delphiooLib)\ooTemplateParser\code;$(delphiooLib)\ooText\code;$(delphiooLib)\ooScapeTranslate\code;..\..\code;..\code"/>
             <UnitOutputDirectory Value="..\build\release"/>
           </SearchPaths>
           <Parsing>
@@ -132,7 +132,7 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;..\..\..\ooBatch\code;..\..\..\ooOS\code;..\..\..\ooParser\code;..\..\..\ooTemplateParser\code;..\..\..\ooText\code;..\..\..\ooScapeTranslate\code;..\..\code;..\code"/>
+      <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$(delphiooLib)\ooBatch\code;$(delphiooLib)\ooOS\code;$(delphiooLib)\ooParser\code;$(delphiooLib)\ooTemplateParser\code;$(delphiooLib)\ooText\code;$(delphiooLib)\ooScapeTranslate\code;..\..\code;..\code"/>
       <UnitOutputDirectory Value="..\build\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

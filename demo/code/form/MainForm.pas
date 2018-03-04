@@ -36,15 +36,13 @@ type
   public
     function LogEnabled: Boolean;
     function Logger: ILogger;
-
     procedure LogDebug(const Text: String);
     procedure LogInfo(const Text: String);
     procedure LogError(const Error: Exception; const RaiseException: Boolean);
+    procedure LogErrorText(const Text: String);
     procedure LogWarning(const Text: String);
-
     constructor Create(AOwner: TComponent; const Logger: ILogger); reintroduce;
     destructor Destroy; override;
-
     class function New(const Logger: ILogger): TMainForm;
   end;
 
@@ -68,6 +66,11 @@ end;
 procedure TMainForm.LogError(const Error: Exception; const RaiseException: Boolean);
 begin
   _LogActor.LogError(Error, RaiseException);
+end;
+
+procedure TMainForm.LogErrorText(const Text: String);
+begin
+  _LogActor.LogErrorText(Text);
 end;
 
 function TMainForm.Logger: ILogger;

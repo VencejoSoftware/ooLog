@@ -4,7 +4,7 @@
         <MainSource>demo.dpr</MainSource>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-        <ProjectVersion>18.2</ProjectVersion>
+        <ProjectVersion>18.3</ProjectVersion>
         <Base>True</Base>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -46,7 +46,7 @@
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <SanitizedProjectName>demo</SanitizedProjectName>
         <DCC_UsePackage>vclx;vcl;vclimg;dbrtl;Rave77VCL;bdertl;rtl;dxCoreD14;cxLibraryD14;dxDockingD14;dxBarD14;dxBarDBNavD14;dxBarExtDBItemsD14;dxBarExtItemsD14;dxRibbonD14;cxPageControlD14;vcldb;cxEditorsD14;cxExtEditorsD14;cxGridD14;cxTreeListD14;dxLayoutControlD14;dxmdsD14;dxComnD14;dxsbD14;dxdbtrD14;dxtrmdD14;dxorgcD14;dxdborD14;cxBarEditItemD14;cxTreeListdxBarPopupMenuD14;vclactnband;vcldbx;vcltouch;xmlrtl;dsnap;dsnapcon;TeeUI;TeeDB;Tee;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_100_140;Intraweb_100_140;VclSmp;vclie;inetdb;webdsnap;websnap;inetdbbde;inetdbxpress;soaprtl;vclribbon;DbxCommonDriver;DbxClientDriver;DBXInterBaseDriver;DBXMySQLDriver;dbexpress;dbxcds;GireRapi;TIE_http_https;rxctl;rxdb;QR5RunD2010;GirePGP;ZMstr191D2010;CtrlGire;GireHelp;vclPerfUtilsV4D14;$(DCC_UsePackage)</DCC_UsePackage>
-        <DCC_UnitSearchPath>..\..\code\;..\..\..\ooScapeTranslate\code\;..\..\..\ooTemplateParser\code\;..\..\..\ooParser\code\;..\..\..\ooText\code\;..\..\..\ooOS\code\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\code\;$(delphiooLib)\ooScapeTranslate\code\;$(delphiooLib)\ooTemplateParser\code\;$(delphiooLib)\ooParser\code\;$(delphiooLib)\ooText\code\;$(delphiooLib)\ooOS\code\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DependencyCheckOutputName>demo.exe</DCC_DependencyCheckOutputName>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_Platform>x86</DCC_Platform>
