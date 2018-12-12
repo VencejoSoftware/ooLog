@@ -8,9 +8,9 @@ program demo;
 uses
   Forms,
   Interfaces,
-  ooText.Match.Insensitive,
-  ooLogger.TextFile,
-  ooLog.Template,
+  InsensitiveTextMatch,
+  TemplateLog,
+  TextFileLog,
   MainForm in '..\code\form\MainForm.pas';
 
 {$R *.res}
@@ -20,11 +20,10 @@ begin
   SetHeapTraceOutput('heaptrace.log');
 {$endif}
   Application.Initialize;
-  NewMainForm := TMainForm.New(TTextFileLogger.New(TLogTemplate.New('{AppPath}demo_{Month}{Year}.log',
-      TTextMatchInsensitive.New), TLogTemplate.New('{IP}:{PC}-{User}-{App}[{LogLevel}]>>{DateTime} {TEXT}',
-      TTextMatchInsensitive.New)));
+  NewMainForm := TMainForm.New(TTextFileLog.New(TTemplateLog.New('{AppPath}demo_{Month}{Year}.log',
+    TInsensitiveTextMatch.New), TTemplateLog.New('{IP}:{PC}-{User}-{App}[{LogLevel}]>>{DateTime} {TEXT}',
+    TInsensitiveTextMatch.New)));
   NewMainForm.ShowModal;
-  NewMainForm.Free;
-  Application.Free;
+  Application.Run;
 
 end.

@@ -4,7 +4,7 @@
         <MainSource>test.dpr</MainSource>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-        <ProjectVersion>18.2</ProjectVersion>
+        <ProjectVersion>18.4</ProjectVersion>
         <Base>True</Base>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Console</AppType>
@@ -46,7 +46,7 @@
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.2.3.4;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <SanitizedProjectName>test</SanitizedProjectName>
         <DCC_UsePackage>vclx;vcl;vclimg;dbrtl;Rave77VCL;bdertl;rtl;dxCoreD14;cxLibraryD14;dxDockingD14;dxBarD14;dxBarDBNavD14;dxBarExtDBItemsD14;dxBarExtItemsD14;dxRibbonD14;cxPageControlD14;vcldb;cxEditorsD14;cxExtEditorsD14;cxGridD14;cxTreeListD14;dxLayoutControlD14;dxmdsD14;dxComnD14;dxsbD14;dxdbtrD14;dxtrmdD14;dxorgcD14;dxdborD14;cxBarEditItemD14;cxTreeListdxBarPopupMenuD14;vclactnband;vcldbx;vcltouch;xmlrtl;dsnap;dsnapcon;TeeUI;TeeDB;Tee;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_100_140;Intraweb_100_140;VclSmp;vclie;inetdb;webdsnap;websnap;inetdbbde;inetdbxpress;soaprtl;vclribbon;DbxCommonDriver;DbxClientDriver;DBXInterBaseDriver;DBXMySQLDriver;dbexpress;dbxcds;GireRapi;TIE_http_https;rxctl;rxdb;QR5RunD2010;GirePGP;ZMstr191D2010;CtrlGire;GireHelp;vclPerfUtilsV4D14;$(DCC_UsePackage)</DCC_UsePackage>
-        <DCC_UnitSearchPath>$(delphi3rdParty)\dunit-agiledoxtestrunner\;$(delphi3rdParty)\dxDUnit\Source\;$(delphiooLib)\ooBatch\code\;$(delphiooLib)\ooOS\code\;$(delphiooLib)\ooParser\code\;$(delphiooLib)\ooTemplateParser\code\;$(delphiooLib)\ooText\code\;$(delphiooLib)\ooScapeTranslate\code\;..\..\code\;..\code\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>$(delphi3rdParty)\dunit-agiledoxtestrunner\;$(delphi3rdParty)\dxDUnit\Source\;$(delphiooLib)\ooBatch\code\;$(delphiooLib)\ooOS\code\;$(delphiooLib)\ooParser\code\;$(delphiooLib)\ooTemplateParser\code\;$(delphiooLib)\ooText\code\;$(delphiooLib)\ooScapeTranslate\code\;$(delphiooLib)\ooGeneric\code\;..\code\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DependencyCheckOutputName>test.exe</DCC_DependencyCheckOutputName>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_Platform>x86</DCC_Platform>
@@ -82,7 +82,18 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\code\uLog.Template_test.pas"/>
+        <DCCReference Include="..\..\code\Log.pas"/>
+        <DCCReference Include="..\..\code\LogActor.pas"/>
+        <DCCReference Include="..\..\code\TextFileLog.pas"/>
+        <DCCReference Include="..\..\code\TemplateLog.pas"/>
+        <DCCReference Include="..\..\code\TemplateScapeListLog.pas"/>
+        <DCCReference Include="..\..\code\TemplateTagListLog.pas"/>
+        <DCCReference Include="..\code\TemplateLog_test.pas"/>
+        <DCCReference Include="..\code\TemplateScapeListLog_test.pas"/>
+        <DCCReference Include="..\code\LogActor_test.pas"/>
+        <DCCReference Include="..\code\TextFileLog_test.pas"/>
+        <DCCReference Include="..\code\TemplateTagListLog_test.pas"/>
+        <DCCReference Include="..\code\mock\LogMock.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -146,9 +157,15 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment Version="3">
-                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule"/>
+                <DeployFile LocalName="..\build\debug\test.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>test.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\build\debug\test.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="$(BDS)\Redist\iossim32\libcgunwind.1.0.dylib" Class="DependencyModule"/>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="OSX32">
                         <Operation>1</Operation>
