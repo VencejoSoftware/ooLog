@@ -1,0 +1,44 @@
+language: generic
+sudo: true
+dist: trusty
+
+os:
+  - linux
+
+env:
+  global:
+    - delphiooLib=$TRAVIS_BUILD_DIR
+    - delphi3rdParty=$TRAVIS_BUILD_DIR
+    - WINEPREFIX=~/.winelaz
+    - DISPLAY=:99.0
+  matrix:
+    - LAZ_VER=1.8.2
+
+matrix:
+  include:
+    - os: linux
+      env: LAZ_VER=1.8.2 LAZ_ENV= LAZ_OPT="--build-mode=Release --os=linux --cpu=x86_64 --build-all --no-write-project --verbose"
+
+before_install:
+  - Xvfb $DISPLAY &
+  - git clone https://github.com/VencejoSoftware/ooBatch.git ${delphiooLib}/ooBatch
+  - chmod +x ${delphiooLib}/ooBatch/code/.travis.install.py
+  - git clone https://github.com/VencejoSoftware/generics.collections.git ${delphiooLib}/generics.collections
+  - git clone https://github.com/VencejoSoftware/ooGeneric.git ${delphiooLib}/ooGeneric
+  - git clone https://github.com/VencejoSoftware/ooText.git ${delphiooLib}/ooText
+  - git clone https://github.com/VencejoSoftware/ooOS.git ${delphiooLib}/ooOS
+  - git clone https://github.com/VencejoSoftware/ooParser.git ${delphiooLib}/ooParser
+  - git clone https://github.com/VencejoSoftware/ooTemplateParser.git ${delphiooLib}/ooTemplateParser
+  - git clone https://github.com/VencejoSoftware/ooScapeTranslate.git ${delphiooLib}/ooScapeTranslate
+
+install:
+  - ${delphiooLib}/ooBatch/code/.travis.install.py
+
+script:
+  - lazbuild $LAZ_OPT ./test/lazarus/test.lpi
+  - $LAZ_ENV ./test/build/release/test --all --format=plain
+
+notifications:
+  email:
+    on_success: false
+    on_failure: change

@@ -12,7 +12,7 @@ object MainForm: TMainForm
   Font.Style = []
   OldCreateOrder = False
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 14
   object btnLog: TButton
     Left = 8
     Top = 8
@@ -100,8 +100,20 @@ object MainForm: TMainForm
     Height = 246
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
-    Lines.Strings = (
-      'LogMemo')
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssBoth
     TabOrder = 5
+  end
+  object Timer1: TTimer
+    Interval = 350
+    OnTimer = Timer1Timer
+    Left = 536
+    Top = 216
   end
 end

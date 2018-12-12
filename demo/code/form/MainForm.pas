@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2016, Vencejo Software
+  Copyright (c) 2018, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -8,8 +8,10 @@ unit MainForm;
 interface
 
 uses
-  SysUtils, Classes, Graphics, Controls, Forms, StdCtrls, StrUtils,
-  ooLogger.Intf, ooLog.Actor;
+  SysUtils, Classes, Graphics, Controls, Forms, StdCtrls, StrUtils, ExtCtrls,
+  InsensitiveTextMatch,
+  TemplateLog,
+  Log, LogActor;
 
 type
   TMainForm = class(TForm, ILogActor)
@@ -23,27 +25,28 @@ type
     chkLevelWarning: TCheckBox;
     chkLevelError: TCheckBox;
     LogMemo: TMemo;
+    Timer1: TTimer;
     procedure OnUpdateFilterSet(Sender: TObject);
     procedure btnLogClick(Sender: TObject);
     procedure btnWarningClick(Sender: TObject);
     procedure btnDebugClick(Sender: TObject);
     procedure btnErrorClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
-    _Logger: ILogger;
-    _LogActor: TLogActor;
+    _Log: ILog;
+    _LogActor: ILogActor;
     procedure FilterSetToControls;
     procedure ControlsToFilterSet;
   public
     function LogEnabled: Boolean;
-    function Logger: ILogger;
+    function Log: ILog;
     procedure LogDebug(const Text: String);
     procedure LogInfo(const Text: String);
     procedure LogError(const Error: Exception; const RaiseException: Boolean);
     procedure LogErrorText(const Text: String);
     procedure LogWarning(const Text: String);
-    constructor Create(AOwner: TComponent; const Logger: ILogger); reintroduce;
-    destructor Destroy; override;
-    class function New(const Logger: ILogger): TMainForm;
+    constructor Create(AOwner: TComponent; const Log: ILog); reintroduce;
+    class function New(const Log: ILog): TMainForm;
   end;
 
 var
@@ -51,7 +54,11 @@ var
 
 implementation
 
+{$IFDEF FPC}
+{$R *.lfm}
+{$ELSE}
 {$R *.dfm}
+{$ENDIF}
 
 procedure TMainForm.LogDebug(const Text: String);
 begin
@@ -73,9 +80,9 @@ begin
   _LogActor.LogErrorText(Text);
 end;
 
-function TMainForm.Logger: ILogger;
+function TMainForm.Log: ILog;
 begin
-  Result := _Logger;
+  Result := _Log;
 end;
 
 procedure TMainForm.LogInfo(const Text: String);
@@ -91,6 +98,29 @@ end;
 procedure TMainForm.OnUpdateFilterSet(Sender: TObject);
 begin
   ControlsToFilterSet;
+end;
+
+procedure TMainForm.Timer1Timer(Sender: TObject);
+var
+  FileName, Content, Line: String;
+  TextStream: TextFile;
+begin
+  FileName := TTemplateLog.New('{AppPath}demo_{Month}{Year}.log', TInsensitiveTextMatch.New).Build;
+  if not FileExists(FileName) then
+    Exit;
+  Content := EmptyStr;
+  AssignFile(TextStream, FileName);
+  try
+    Reset(TextStream);
+    while not Eof(TextStream) do
+    begin
+      Readln(TextStream, Line);
+      Content := Content + Line + sLineBreak;
+    end;
+  finally
+    CloseFile(TextStream);
+  end;
+  LogMemo.Text := Content;
 end;
 
 procedure TMainForm.btnDebugClick(Sender: TObject);
@@ -117,7 +147,7 @@ end;
 
 procedure TMainForm.btnWarningClick(Sender: TObject);
 begin
-  LogWarning('Warning Logger!!!');
+  LogWarning('Warning Log!!!');
 end;
 
 procedure TMainForm.ControlsToFilterSet;
@@ -133,35 +163,29 @@ begin
     Include(LevelFilter, Warning);
   if chkLevelError.Checked then
     Include(LevelFilter, Error);
-  _Logger.ChangeFilter(LevelFilter);
+  _Log.ChangeFilter(LevelFilter);
 end;
 
 procedure TMainForm.FilterSetToControls;
 begin
-  chkLevelLog.Checked := Debug in _Logger.Filter;
-  chkLevelInfo.Checked := Info in _Logger.Filter;
-  chkLevelWarning.Checked := Warning in _Logger.Filter;
-  chkLevelError.Checked := Error in _Logger.Filter;
+  chkLevelLog.Checked := Debug in _Log.Filter;
+  chkLevelInfo.Checked := Info in _Log.Filter;
+  chkLevelWarning.Checked := Warning in _Log.Filter;
+  chkLevelError.Checked := Error in _Log.Filter;
 end;
 
-constructor TMainForm.Create(AOwner: TComponent; const Logger: ILogger);
+constructor TMainForm.Create(AOwner: TComponent; const Log: ILog);
 begin
   inherited Create(AOwner);
-  _Logger := Logger;
-  _LogActor := TLogActor.Create(Logger);
+  _Log := Log;
+  _LogActor := TLogActor.Create(Log);
   LogMemo.Clear;
   FilterSetToControls;
 end;
 
-destructor TMainForm.Destroy;
+class function TMainForm.New(const Log: ILog): TMainForm;
 begin
-  _LogActor.Free;
-  inherited;
-end;
-
-class function TMainForm.New(const Logger: ILogger): TMainForm;
-begin
-  Result := TMainForm.Create(Application, Logger);
+  Result := TMainForm.Create(Application, Log);
 end;
 
 end.
