@@ -220,10 +220,10 @@ procedure TTemplateTagListLog.UpdateDynamicTags(const Text: String; const LogLev
 const
   LEVEL_TEXT: array [TLogLevel] of string = ('DEBUG', 'INFO', 'WARNING', 'ERROR');
 begin
-  IParserVariable(FindByName(TAG_UPPER)).ChangeValue(UpperCase(Text));
-  IParserVariable(FindByName(TAG_LOWER)).ChangeValue(LowerCase(Text));
-  IParserVariable(FindByName(TAG_TEXT)).ChangeValue(Text);
-  IParserVariable(FindByName(TAG_LEVEL)).ChangeValue(LEVEL_TEXT[LogLevel]);
+  (FindByName(TAG_UPPER) as IParserVariable).ChangeValue(UpperCase(Text));
+  (FindByName(TAG_LOWER) as IParserVariable).ChangeValue(LowerCase(Text));
+  (FindByName(TAG_TEXT) as IParserVariable).ChangeValue(Text);
+  (FindByName(TAG_LEVEL) as IParserVariable).ChangeValue(LEVEL_TEXT[LogLevel]);
 end;
 
 procedure TTemplateTagListLog.LoadOSInfo;
