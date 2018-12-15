@@ -7,6 +7,8 @@ unit LogActor_test;
 
 interface
 
+{$mode objfpc}{$H+}
+
 uses
   SysUtils,
   InsensitiveTextMatch,
@@ -59,7 +61,7 @@ var
 begin
   LogActor := TLogActor.New(_Log);
   LogActor.LogDebug('Debug test');
-  CheckEquals('[DEBUG]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Debug test', Trim(TLogMock(_Log).Strings.Text));
+  CheckEquals('[DEBUG]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Debug test', Trim((_Log as TLogMock).Strings.Text));
 end;
 
 procedure TLogActorTest.LogInfoReturnLineText;
@@ -68,7 +70,7 @@ var
 begin
   LogActor := TLogActor.New(_Log);
   LogActor.LogInfo('Info test');
-  CheckEquals('[INFO]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Info test', Trim(TLogMock(_Log).Strings.Text));
+  CheckEquals('[INFO]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Info test', Trim((_Log as TLogMock).Strings.Text));
 end;
 
 procedure TLogActorTest.LogErrorReturnExceptionMessage;
@@ -83,7 +85,7 @@ begin
   finally
     Error.Free;
   end;
-  CheckEquals('[ERROR]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Exception 1', Trim(TLogMock(_Log).Strings.Text));
+  CheckEquals('[ERROR]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Exception 1', Trim((_Log as TLogMock).Strings.Text));
 end;
 
 procedure TLogActorTest.LogErrorWithRaiseReturnException;
@@ -105,7 +107,7 @@ begin
   finally
     Error.Free;
   end;
-  CheckEquals('[ERROR]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Exception 1', Trim(TLogMock(_Log).Strings.Text));
+  CheckEquals('[ERROR]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Exception 1', Trim((_Log as TLogMock).Strings.Text));
 end;
 
 procedure TLogActorTest.LogErrorTextReturnLineText;
@@ -114,7 +116,7 @@ var
 begin
   LogActor := TLogActor.New(_Log);
   LogActor.LogErrorText('Error text test');
-  CheckEquals('[ERROR]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Error text test', Trim(TLogMock(_Log).Strings.Text));
+  CheckEquals('[ERROR]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Error text test', Trim((_Log as TLogMock).Strings.Text));
 end;
 
 procedure TLogActorTest.LogWarningReturnLineText;
@@ -123,7 +125,7 @@ var
 begin
   LogActor := TLogActor.New(_Log);
   LogActor.LogWarning('Warning test');
-  CheckEquals('[WARNING]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Warning test', Trim(TLogMock(_Log).Strings.Text));
+  CheckEquals('[WARNING]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Warning test', Trim((_Log as TLogMock).Strings.Text));
 end;
 
 procedure TLogActorTest.SetUp;
