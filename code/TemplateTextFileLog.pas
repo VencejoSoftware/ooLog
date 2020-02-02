@@ -16,34 +16,11 @@ interface
 
 uses
   Log,
+  LogFileTemplatedNameFactory,
   TextFileLog,
   TemplateLog;
 
 type
-{$REGION 'documentation'}
-{
-  @abstract(Implementation of @link(ILogFileNameFactory))
-  File path name resolver based in template
-  @member(Build @seealso(ILogFileNameFactory.Build))
-  @member(
-    Create Object constructor
-    @param(FileNameTemplate @link(ITemplateLog Template))
-  )
-  @member(
-    New Create a new @classname as interface
-    @param(FileNameTemplate @link(ITemplateLog Template))
-  )
-}
-{$ENDREGION}
-  TLogFileTemplatedNameFactory = class sealed(TInterfacedObject, ILogFileNameFactory)
-  strict private
-    _FileNameTemplate: ITemplateLog;
-  public
-    function Build: String;
-    constructor Create(const FileNameTemplate: ITemplateLog);
-    class function New(const FileNameTemplate: ITemplateLog): ILogFileNameFactory;
-  end;
-
 {$REGION 'documentation'}
 {
   @abstract(Implementation of @link(ILog))
@@ -66,7 +43,6 @@ type
   )
 }
 {$ENDREGION}
-
   TTemplateTextFileLog = class sealed(TInterfacedObject, ILog)
   strict private
     _Log: ILog;
@@ -117,23 +93,6 @@ end;
 class function TTemplateTextFileLog.New(const FileNameTemplate, TemplateLog: ITemplateLog): ILog;
 begin
   Result := TTemplateTextFileLog.Create(FileNameTemplate, TemplateLog);
-end;
-
-{ TLogFileTemplatedNameFactory }
-
-function TLogFileTemplatedNameFactory.Build: String;
-begin
-  Result := _FileNameTemplate.Build;
-end;
-
-constructor TLogFileTemplatedNameFactory.Create(const FileNameTemplate: ITemplateLog);
-begin
-  _FileNameTemplate := FileNameTemplate;
-end;
-
-class function TLogFileTemplatedNameFactory.New(const FileNameTemplate: ITemplateLog): ILogFileNameFactory;
-begin
-  Result := TLogFileTemplatedNameFactory.Create(FileNameTemplate);
 end;
 
 end.
