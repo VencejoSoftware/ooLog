@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2018, Vencejo Software
+  Copyright (c) 2020, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -17,12 +17,12 @@ type
   strict private
     _Strings: TStringList;
     _TemplateLog: ITemplateLog;
-    _Filter: TLogLevelFilter;
+    _Filter: TLogSeverityFilter;
   public
-    function Filter: TLogLevelFilter;
+    function Filter: TLogSeverityFilter;
     function Strings: TStringList;
-    procedure ChangeFilter(const Filter: TLogLevelFilter);
-    procedure Write(const Text: string; const Level: TLogLevel); virtual;
+    procedure ChangeFilter(const Filter: TLogSeverityFilter);
+    procedure Write(const Text: string; const Severity: TLogSeverity); virtual;
     constructor Create(const TemplateLog: ITemplateLog); virtual;
     destructor Destroy; override;
     class function New(const TemplateLog: ITemplateLog): ILog;
@@ -35,18 +35,18 @@ begin
   Result := _Strings;
 end;
 
-function TLogMock.Filter: TLogLevelFilter;
+function TLogMock.Filter: TLogSeverityFilter;
 begin
   Result := _Filter;
 end;
 
-procedure TLogMock.Write(const Text: string; const Level: TLogLevel);
+procedure TLogMock.Write(const Text: string; const Severity: TLogSeverity);
 begin
-  if Level in _Filter then
-    _Strings.Add(_TemplateLog.Build(Text, Level));
+  if Severity in _Filter then
+    _Strings.Add(_TemplateLog.Build(Text, Severity));
 end;
 
-procedure TLogMock.ChangeFilter(const Filter: TLogLevelFilter);
+procedure TLogMock.ChangeFilter(const Filter: TLogSeverityFilter);
 begin
   _Filter := Filter;
 end;

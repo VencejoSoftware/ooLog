@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2018, Vencejo Software
+  Copyright (c) 2020, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -19,11 +19,11 @@ type
     btnError: TButton;
     btnDebug: TButton;
     btnWarning: TButton;
-    gbLevelFilter: TGroupBox;
-    chkLevelLog: TCheckBox;
-    chkLevelInfo: TCheckBox;
-    chkLevelWarning: TCheckBox;
-    chkLevelError: TCheckBox;
+    gbSeverityFilter: TGroupBox;
+    chkSeverityLog: TCheckBox;
+    chkSeverityInfo: TCheckBox;
+    chkSeverityWarning: TCheckBox;
+    chkSeverityError: TCheckBox;
     LogMemo: TMemo;
     Timer1: TTimer;
     procedure OnUpdateFilterSet(Sender: TObject);
@@ -40,11 +40,11 @@ type
   public
     function LogEnabled: Boolean;
     function Log: ILog;
-    procedure LogDebug(const Text: String);
-    procedure LogInfo(const Text: String);
-    procedure LogError(const Error: Exception; const RaiseException: Boolean);
-    procedure LogErrorText(const Text: String);
-    procedure LogWarning(const Text: String);
+    procedure WriteDebug(const Text: String);
+    procedure WriteInfo(const Text: String);
+    procedure WriteException(const Error: Exception; const RaiseException: Boolean);
+    procedure WriteError(const Text: String);
+    procedure WriteWarning(const Text: String);
     constructor Create(AOwner: TComponent; const Log: ILog); reintroduce;
     class function New(const Log: ILog): TMainForm;
   end;
@@ -60,9 +60,9 @@ implementation
 {$R *.dfm}
 {$ENDIF}
 
-procedure TMainForm.LogDebug(const Text: String);
+procedure TMainForm.WriteDebug(const Text: String);
 begin
-  _LogActor.LogDebug(Text);
+  _LogActor.WriteDebug(Text);
 end;
 
 function TMainForm.LogEnabled: Boolean;
@@ -70,14 +70,14 @@ begin
   Result := _LogActor.LogEnabled;
 end;
 
-procedure TMainForm.LogError(const Error: Exception; const RaiseException: Boolean);
+procedure TMainForm.WriteException(const Error: Exception; const RaiseException: Boolean);
 begin
-  _LogActor.LogError(Error, RaiseException);
+  _LogActor.WriteException(Error, RaiseException);
 end;
 
-procedure TMainForm.LogErrorText(const Text: String);
+procedure TMainForm.WriteError(const Text: String);
 begin
-  _LogActor.LogErrorText(Text);
+  _LogActor.WriteError(Text);
 end;
 
 function TMainForm.Log: ILog;
@@ -85,14 +85,14 @@ begin
   Result := _Log;
 end;
 
-procedure TMainForm.LogInfo(const Text: String);
+procedure TMainForm.WriteInfo(const Text: String);
 begin
-  _LogActor.LogInfo(Text);
+  _LogActor.WriteInfo(Text);
 end;
 
-procedure TMainForm.LogWarning(const Text: String);
+procedure TMainForm.WriteWarning(const Text: String);
 begin
-  _LogActor.LogWarning(Text);
+  _LogActor.WriteWarning(Text);
 end;
 
 procedure TMainForm.OnUpdateFilterSet(Sender: TObject);
@@ -125,7 +125,7 @@ end;
 
 procedure TMainForm.btnDebugClick(Sender: TObject);
 begin
-  LogDebug('Something to debug');
+  WriteDebug('Something to debug');
 end;
 
 procedure TMainForm.btnErrorClick(Sender: TObject);
@@ -134,7 +134,7 @@ var
 begin
   Err := Exception.Create('Error founded');
   try
-    LogError(Err, False);
+    WriteException(Err, False);
   finally
     Err.Free;
   end
@@ -142,36 +142,36 @@ end;
 
 procedure TMainForm.btnLogClick(Sender: TObject);
 begin
-  LogInfo('Info line to ignore');
+  WriteInfo('Info line to ignore');
 end;
 
 procedure TMainForm.btnWarningClick(Sender: TObject);
 begin
-  LogWarning('Warning Log!!!');
+  WriteWarning('Warning Log!!!');
 end;
 
 procedure TMainForm.ControlsToFilterSet;
 var
-  LevelFilter: TLogLevelFilter;
+  SeverityFilter: TLogSeverityFilter;
 begin
-  LevelFilter := [];
-  if chkLevelLog.Checked then
-    Include(LevelFilter, Debug);
-  if chkLevelInfo.Checked then
-    Include(LevelFilter, Info);
-  if chkLevelWarning.Checked then
-    Include(LevelFilter, Warning);
-  if chkLevelError.Checked then
-    Include(LevelFilter, Error);
-  _Log.ChangeFilter(LevelFilter);
+  SeverityFilter := [];
+  if chkSeverityLog.Checked then
+    Include(SeverityFilter, Debug);
+  if chkSeverityInfo.Checked then
+    Include(SeverityFilter, Info);
+  if chkSeverityWarning.Checked then
+    Include(SeverityFilter, Warning);
+  if chkSeverityError.Checked then
+    Include(SeverityFilter, Error);
+  _Log.ChangeFilter(SeverityFilter);
 end;
 
 procedure TMainForm.FilterSetToControls;
 begin
-  chkLevelLog.Checked := Debug in _Log.Filter;
-  chkLevelInfo.Checked := Info in _Log.Filter;
-  chkLevelWarning.Checked := Warning in _Log.Filter;
-  chkLevelError.Checked := Error in _Log.Filter;
+  chkSeverityLog.Checked := Debug in _Log.Filter;
+  chkSeverityInfo.Checked := Info in _Log.Filter;
+  chkSeverityWarning.Checked := Warning in _Log.Filter;
+  chkSeverityError.Checked := Error in _Log.Filter;
 end;
 
 constructor TMainForm.Create(AOwner: TComponent; const Log: ILog);

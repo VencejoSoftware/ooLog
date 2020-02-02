@@ -1,6 +1,6 @@
 {$REGION 'documentation'}
 {
-  Copyright (c) 2018, Vencejo Software
+  Copyright (c) 2020, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -31,14 +31,14 @@ type
   @member(
     UpdateDynamicTags Apply dynamic tags to text
     @param(Text Text to update)
-    @param(LogLevel Log level of data log)
+    @param(Severity Log severity of data log)
     @return(Text updated)
   )
 }
 {$ENDREGION}
   ITemplateTagListLog = interface(IParserElementList<IParserElement>)
     ['{CFEB68E0-FFFB-4E32-8A84-442CD96ECC7E}']
-    procedure UpdateDynamicTags(const Text: String; const LogLevel: TLogLevel);
+    procedure UpdateDynamicTags(const Text: String; const Severity: TLogSeverity);
   end;
 
 {$REGION 'documentation'}
@@ -74,6 +74,7 @@ type
   )
 }
 {$ENDREGION}
+
   TTemplateTagListLog = class sealed(TIterableList<IParserElement>, ITemplateTagListLog)
   strict private
   const
@@ -83,7 +84,7 @@ type
     TAG_UPPER = 'UpperText';
     TAG_LOWER = 'LowerText';
     TAG_TEXT = 'Text';
-    TAG_LEVEL = 'LogLevel';
+    TAG_SEVERITY = 'Severity';
   strict private
     _ComputerName, _UserName, _LocalIP: String;
   private
@@ -109,7 +110,7 @@ type
     procedure LoadOSInfo;
   public
     function FindByName(const Name: string): IParserElement;
-    procedure UpdateDynamicTags(const Text: String; const LogLevel: TLogLevel);
+    procedure UpdateDynamicTags(const Text: String; const Severity: TLogSeverity);
     constructor Create; override;
     class function New: ITemplateTagListLog;
   end;
@@ -216,14 +217,14 @@ begin
   Result := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName));
 end;
 
-procedure TTemplateTagListLog.UpdateDynamicTags(const Text: String; const LogLevel: TLogLevel);
+procedure TTemplateTagListLog.UpdateDynamicTags(const Text: String; const Severity: TLogSeverity);
 const
-  LEVEL_TEXT: array [TLogLevel] of string = ('DEBUG', 'INFO', 'WARNING', 'ERROR');
+  SEVERITY_TEXT: array [TLogSeverity] of string = ('DEBUG', 'INFO', 'WARNING', 'ERROR');
 begin
   (FindByName(TAG_UPPER) as IParserVariable).ChangeValue(UpperCase(Text));
   (FindByName(TAG_LOWER) as IParserVariable).ChangeValue(LowerCase(Text));
   (FindByName(TAG_TEXT) as IParserVariable).ChangeValue(Text);
-  (FindByName(TAG_LEVEL) as IParserVariable).ChangeValue(LEVEL_TEXT[LogLevel]);
+  (FindByName(TAG_SEVERITY) as IParserVariable).ChangeValue(SEVERITY_TEXT[Severity]);
 end;
 
 procedure TTemplateTagListLog.LoadOSInfo;
@@ -257,7 +258,7 @@ begin
   Add(TParserVariable.New(TAG_UPPER, nil));
   Add(TParserVariable.New(TAG_LOWER, nil));
   Add(TParserVariable.New(TAG_TEXT, nil));
-  Add(TParserVariable.New(TAG_LEVEL, nil));
+  Add(TParserVariable.New(TAG_SEVERITY, nil));
 end;
 
 constructor TTemplateTagListLog.Create;

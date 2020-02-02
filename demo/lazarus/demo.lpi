@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -28,7 +28,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooOS\code;..\..\code;.."/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\generics.collections\src;$env(delphi3rdParty)\TRegExpr\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooConsole\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooOS\code;..;..\..\code;..\code"/>
             <UnitOutputDirectory Value="..\build\debug"/>
           </SearchPaths>
           <Parsing>
@@ -70,7 +70,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooOS\code;..\..\code;.."/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\generics.collections\src;$env(delphi3rdParty)\TRegExpr\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooConsole\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooOS\code;..;..\..\code;..\code"/>
             <UnitOutputDirectory Value="..\build\release"/>
           </SearchPaths>
           <Parsing>
@@ -105,9 +105,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="3">
       <Item1>
@@ -143,7 +144,7 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooOS\code;..\..\code;.."/>
+      <OtherUnitFiles Value="$env(delphi3rdParty)\generics.collections\src;$env(delphi3rdParty)\TRegExpr\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooConsole\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooOS\code;..;..\..\code;..\code"/>
       <UnitOutputDirectory Value="..\build\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

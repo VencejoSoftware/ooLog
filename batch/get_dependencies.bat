@@ -41,3 +41,9 @@ if not exist %delphiooLib%\ooScapeTranslate\ (
   git clone https://github.com/VencejoSoftware/ooScapeTranslate.git %delphiooLib%\ooScapeTranslate\
   call %delphiooLib%\ooScapeTranslate\batch\get_dependencies.bat
 )
+
+if not exist %delphiooLib%\ooConsole\ (
+  @echo "Clonning ooConsole..."
+  git clone https://github.com/VencejoSoftware/ooConsole.git %delphiooLib%\ooConsole\
+  call %delphiooLib%\ooConsole\batch\get_dependencies.bat
+)

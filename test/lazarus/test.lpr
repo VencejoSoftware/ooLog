@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2018, Vencejo Software
+  Copyright (c) 2020, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -7,6 +7,8 @@ program test;
 
 uses
   RunTest,
+  Forms,
+  Interfaces,
   Log in '..\..\code\Log.pas',
   LogActor in '..\..\code\LogActor.pas',
   TextFileLog in '..\..\code\TextFileLog.pas',
@@ -18,7 +20,11 @@ uses
   LogActor_test in '..\code\LogActor_test.pas',
   TextFileLog_test in '..\code\TextFileLog_test.pas',
   TemplateTagListLog_test in '..\code\TemplateTagListLog_test.pas',
-  LogMock in '..\code\mock\LogMock.pas';
+  LogMock in '..\code\mock\LogMock.pas',
+  TemplateTextFileLog in '..\..\code\TemplateTextFileLog.pas',
+  TemplateTextFileLog_test in '..\code\TemplateTextFileLog_test.pas',
+  ConsoleLog in '..\..\code\ConsoleLog.pas',
+  MultipleLog in '..\..\code\MultipleLog.pas';
 
 {R *.RES}
 

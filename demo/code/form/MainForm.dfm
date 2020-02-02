@@ -12,7 +12,7 @@ object MainForm: TMainForm
   Font.Style = []
   OldCreateOrder = False
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 13
   object btnLog: TButton
     Left = 8
     Top = 8
@@ -49,23 +49,23 @@ object MainForm: TMainForm
     TabOrder = 3
     OnClick = btnWarningClick
   end
-  object gbLevelFilter: TGroupBox
+  object gbSeverityFilter: TGroupBox
     Left = 8
-    Top = 132
+    Top = 130
     Width = 90
     Height = 124
-    Caption = 'Level Filter'
+    Caption = 'Severity Filter'
     TabOrder = 4
-    object chkLevelLog: TCheckBox
+    object chkSeverityLog: TCheckBox
       Left = 16
       Top = 22
       Width = 70
       Height = 17
-      Caption = 'Log'
+      Caption = 'Debug'
       TabOrder = 0
       OnClick = OnUpdateFilterSet
     end
-    object chkLevelInfo: TCheckBox
+    object chkSeverityInfo: TCheckBox
       Left = 16
       Top = 45
       Width = 70
@@ -74,7 +74,7 @@ object MainForm: TMainForm
       TabOrder = 1
       OnClick = OnUpdateFilterSet
     end
-    object chkLevelWarning: TCheckBox
+    object chkSeverityWarning: TCheckBox
       Left = 16
       Top = 68
       Width = 70
@@ -83,7 +83,7 @@ object MainForm: TMainForm
       TabOrder = 2
       OnClick = OnUpdateFilterSet
     end
-    object chkLevelError: TCheckBox
+    object chkSeverityError: TCheckBox
       Left = 16
       Top = 91
       Width = 70
