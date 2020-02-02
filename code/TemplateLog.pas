@@ -1,6 +1,6 @@
 {$REGION 'documentation'}
 {
-  Copyright (c) 2018, Vencejo Software
+  Copyright (c) 2020, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -29,7 +29,7 @@ type
   @member(
     Build Parse all dynamic tags and return a static text
     @param(Template Text template to evaluate)
-    @param(LogLevel Log level of data log)
+    @param(Severity Log severity of data log)
     @return(Text parsed)
   )
   @member(
@@ -48,7 +48,7 @@ type
 {$ENDREGION}
   ITemplateLog = interface
     ['{0D2A8B86-5BEC-4E9E-8131-67F55CDFE46B}']
-    function Build(const Template: String; const LogLevel: TLogLevel): String; overload;
+    function Build(const Template: String; const Severity: TLogSeverity): String; overload;
     function Build: String; overload;
     function TagList: ITemplateTagListLog;
     function ScapeList: IScapeTranslateList;
@@ -73,6 +73,7 @@ type
   )
 }
 {$ENDREGION}
+
   TTemplateLog = class sealed(TInterfacedObject, ITemplateLog)
   const
     TAG_BEGIN = '{';
@@ -83,7 +84,7 @@ type
     _ScapeList: IScapeTranslateList;
     _TextMatch: ITextMatch;
   public
-    function Build(const Template: String; const LogLevel: TLogLevel): String; overload;
+    function Build(const Template: String; const Severity: TLogSeverity): String; overload;
     function Build: String; overload;
     function TagList: ITemplateTagListLog;
     function ScapeList: IScapeTranslateList;
@@ -108,9 +109,9 @@ begin
   Result := TTagSubstitute.New(TAG_BEGIN, TAG_END, _TagList, _TextMatch).Evaluate(_Template);
 end;
 
-function TTemplateLog.Build(const Template: String; const LogLevel: TLogLevel): String;
+function TTemplateLog.Build(const Template: String; const Severity: TLogSeverity): String;
 begin
-  TagList.UpdateDynamicTags(_ScapeList.Apply(Template), LogLevel);
+  TagList.UpdateDynamicTags(_ScapeList.Apply(Template), Severity);
   Result := Build;
 end;
 

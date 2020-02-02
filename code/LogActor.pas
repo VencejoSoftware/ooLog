@@ -1,6 +1,6 @@
 {$REGION 'documentation'}
 {
-  Copyright (c) 2018, Vencejo Software
+  Copyright (c) 2020, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -30,24 +30,24 @@ type
     @return(@link(ILog Log object))
   )
   @member(
-    LogDebug Log text in debug level
+    WriteDebug Log text in debug severity
     @param(Text Text to write)
   )
   @member(
-    LogInfo Log text in info level
+    WriteInfo Log text in info severity
     @param(Text Text to write)
   )
   @member(
-    LogError Write error text based on exception object
+    WriteException Write error text based on exception object
     @param(Error Exception object)
     @param(RaiseException Raise exception after log)
   )
   @member(
-    LogErrorText Log text in error level
+    WriteError Log text in error severity
     @param(Text Text to write)
   )
   @member(
-    LogWarning Log text in warning level
+    WriteWarning Log text in warning severity
     @param(Text Text to write)
   )
 }
@@ -56,11 +56,11 @@ type
     ['{8C88DA51-EC30-42AD-8CEE-B0731926E110}']
     function LogEnabled: Boolean;
     function Log: ILog;
-    procedure LogDebug(const Text: String);
-    procedure LogInfo(const Text: String);
-    procedure LogError(const Error: Exception; const RaiseException: Boolean);
-    procedure LogErrorText(const Text: String);
-    procedure LogWarning(const Text: String);
+    procedure WriteDebug(const Text: String);
+    procedure WriteInfo(const Text: String);
+    procedure WriteException(const Error: Exception; const RaiseException: Boolean);
+    procedure WriteError(const Text: String);
+    procedure WriteWarning(const Text: String);
   end;
 
 {$REGION 'documentation'}
@@ -68,15 +68,15 @@ type
   @abstract(Implementation of @link(ILogActor))
   @member(LogEnabled @seealso(ILogActor.LogEnabled))
   @member(Log @seealso(ILogActor.Log))
-  @member(LogDebug @seealso(ILogActor.LogDebug))
-  @member(LogInfo @seealso(ILogActor.LogInfo))
-  @member(LogError @seealso(ILogActor.LogError))
-  @member(LogErrorText @seealso(ILogActor.LogErrorText))
-  @member(LogWarning @seealso(ILogActor.LogWarning))
+  @member(WriteDebug @seealso(ILogActor.WriteDebug))
+  @member(WriteInfo @seealso(ILogActor.WriteInfo))
+  @member(WriteException @seealso(ILogActor.WriteException))
+  @member(WriteError @seealso(ILogActor.WriteError))
+  @member(WriteWarning @seealso(ILogActor.WriteWarning))
   @member(
     WriteLog Parse and write log text
     @param(Text Text to log)
-    @param(LogLevel Level of log)
+    @param(Severity Severity of log)
   )
   @member(
     Create Object constructor
@@ -88,19 +88,20 @@ type
   )
 }
 {$ENDREGION}
+
   TLogActor = class(TInterfacedObject, ILogActor)
   strict private
     _Logger: ILog;
   private
-    procedure WriteLog(const Text: String; const LogLevel: TLogLevel);
+    procedure WriteLog(const Text: String; const Severity: TLogSeverity);
   public
     function LogEnabled: Boolean;
     function Log: ILog;
-    procedure LogDebug(const Text: String);
-    procedure LogInfo(const Text: String);
-    procedure LogError(const Error: Exception; const RaiseException: Boolean);
-    procedure LogErrorText(const Text: String);
-    procedure LogWarning(const Text: String);
+    procedure WriteDebug(const Text: String);
+    procedure WriteInfo(const Text: String);
+    procedure WriteException(const Error: Exception; const RaiseException: Boolean);
+    procedure WriteError(const Text: String);
+    procedure WriteWarning(const Text: String);
     constructor Create(const Log: ILog); virtual;
     class function New(const Log: ILog): ILogActor;
   end;
@@ -117,37 +118,37 @@ begin
   Result := Log <> nil;
 end;
 
-procedure TLogActor.WriteLog(const Text: String; const LogLevel: TLogLevel);
+procedure TLogActor.WriteLog(const Text: String; const Severity: TLogSeverity);
 begin
   if LogEnabled then
-    Log.Write(Text, LogLevel);
+    Log.Write(Text, Severity);
 end;
 
-procedure TLogActor.LogInfo(const Text: String);
+procedure TLogActor.WriteInfo(const Text: String);
 begin
   WriteLog(Text, Info);
 end;
 
-procedure TLogActor.LogDebug(const Text: String);
+procedure TLogActor.WriteDebug(const Text: String);
 begin
   WriteLog(Text, Debug);
 end;
 
-procedure TLogActor.LogWarning(const Text: String);
+procedure TLogActor.WriteWarning(const Text: String);
 begin
   WriteLog(Text, Warning);
 end;
 
-procedure TLogActor.LogError(const Error: Exception; const RaiseException: Boolean);
+procedure TLogActor.WriteException(const Error: Exception; const RaiseException: Boolean);
 begin
-  WriteLog(Error.Message, TLogLevel.Error);
+  WriteLog(Error.Message, TLogSeverity.Error);
   if RaiseException then
     raise ExceptClass(Error.ClassType).Create(Error.Message);
 end;
 
-procedure TLogActor.LogErrorText(const Text: String);
+procedure TLogActor.WriteError(const Text: String);
 begin
-  WriteLog(Text, TLogLevel.Error);
+  WriteLog(Text, TLogSeverity.Error);
 end;
 
 constructor TLogActor.Create(const Log: ILog);

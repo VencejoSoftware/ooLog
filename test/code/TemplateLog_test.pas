@@ -1,5 +1,5 @@
 {
-  Copyright (c) 2018, Vencejo Software
+  Copyright (c) 2020, Vencejo Software
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
@@ -22,7 +22,7 @@ uses
 type
   TemplateLogTest = class sealed(TTestCase)
   published
-    procedure TestLogLevel;
+    procedure TestSeverity;
     procedure TestTextCrLf;
     procedure TestAnotherScape;
     procedure TestLowerText;
@@ -32,14 +32,14 @@ type
 
 implementation
 
-procedure TemplateLogTest.TestLogLevel;
+procedure TemplateLogTest.TestSeverity;
 const
-  LEVEL_TEXT: array [TLogLevel] of string = ('DEBUG', 'INFO', 'WARNING', 'ERROR');
+  SEVERITY_TEXT: array [TLogSeverity] of string = ('DEBUG', 'INFO', 'WARNING', 'ERROR');
 begin
-  CheckEquals('DEBUG', TTemplateLog.New('{LogLevel}', TInsensitiveTextMatch.New).Build(EmptyStr, Debug));
-  CheckEquals('INFO', TTemplateLog.New('{LogLevel}', TInsensitiveTextMatch.New).Build(EmptyStr, Info));
-  CheckEquals('WARNING', TTemplateLog.New('{LogLevel}', TInsensitiveTextMatch.New).Build(EmptyStr, Warning));
-  CheckEquals('ERROR', TTemplateLog.New('{LogLevel}', TInsensitiveTextMatch.New).Build(EmptyStr, Error));
+  CheckEquals('DEBUG', TTemplateLog.New('{Severity}', TInsensitiveTextMatch.New).Build(EmptyStr, Debug));
+  CheckEquals('INFO', TTemplateLog.New('{Severity}', TInsensitiveTextMatch.New).Build(EmptyStr, Info));
+  CheckEquals('WARNING', TTemplateLog.New('{Severity}', TInsensitiveTextMatch.New).Build(EmptyStr, Warning));
+  CheckEquals('ERROR', TTemplateLog.New('{Severity}', TInsensitiveTextMatch.New).Build(EmptyStr, Error));
 end;
 
 procedure TemplateLogTest.TestTextCrLf;
@@ -74,7 +74,6 @@ begin
   TemplateLog.ScapeList.Add(TScapeTranslate.New(Chr(9), '{TAB}'));
   CheckEquals('One text{TAB}two text', TemplateLog.Build('One text' + Chr(9) + 'two text', Info));
 end;
-
 
 initialization
 

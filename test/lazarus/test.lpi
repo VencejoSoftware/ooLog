@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -27,7 +27,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooOS\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooGeneric\code;..\..\code;..\code;..\code\mock"/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;--$env(delphi3rdParty)\TRegExpr\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooOS\code;$env(delphiooLib)\ooConsole\code;..\..\code;..\code;..\code\mock"/>
             <UnitOutputDirectory Value="..\build\debug"/>
           </SearchPaths>
           <Parsing>
@@ -66,7 +66,7 @@
           <PathDelim Value="\"/>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooOS\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooGeneric\code;..\..\code;..\code;..\code\mock"/>
+            <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;--$env(delphi3rdParty)\TRegExpr\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooOS\code;$env(delphiooLib)\ooConsole\code;..\..\code;..\code;..\code\mock"/>
             <UnitOutputDirectory Value="..\build\release"/>
           </SearchPaths>
           <Parsing>
@@ -101,9 +101,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="3">
       <Item1>
@@ -116,59 +117,75 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="17">
       <Unit0>
         <Filename Value="test.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\..\code\Log.pas"/>
+        <Filename Value="..\..\code\ConsoleLog.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\..\code\LogActor.pas"/>
+        <Filename Value="..\..\code\Log.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\..\code\TemplateLog.pas"/>
+        <Filename Value="..\..\code\LogActor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\..\code\TemplateScapeListLog.pas"/>
+        <Filename Value="..\..\code\MultipleLog.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\..\code\TemplateTagListLog.pas"/>
+        <Filename Value="..\..\code\TemplateLog.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="..\..\code\TextFileLog.pas"/>
+        <Filename Value="..\..\code\TemplateScapeListLog.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="..\code\LogActor_test.pas"/>
+        <Filename Value="..\..\code\TemplateTagListLog.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="..\code\TemplateLog_test.pas"/>
+        <Filename Value="..\..\code\TemplateTextFileLog.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="..\code\TemplateScapeListLog_test.pas"/>
+        <Filename Value="..\..\code\TextFileLog.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
       <Unit10>
-        <Filename Value="..\code\TemplateTagListLog_test.pas"/>
+        <Filename Value="..\code\LogActor_test.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="..\code\TextFileLog_test.pas"/>
+        <Filename Value="..\code\TemplateLog_test.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
       <Unit12>
-        <Filename Value="..\code\mock\LogMock.pas"/>
+        <Filename Value="..\code\TemplateScapeListLog_test.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="..\code\TemplateTagListLog_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\code\TemplateTextFileLog_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\code\TextFileLog_test.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\code\mock\LogMock.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -176,7 +193,7 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooOS\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooGeneric\code;..\..\code;..\code;..\code\mock"/>
+      <OtherUnitFiles Value="$env(delphi3rdParty)\dunit-agiledoxtestrunner;$env(delphi3rdParty)\generics.collections\src;--$env(delphi3rdParty)\TRegExpr\src;$env(delphiooLib)\ooBatch\code;$env(delphiooLib)\ooText\code;$env(delphiooLib)\ooTemplateParser\code;$env(delphiooLib)\ooParser\code;$env(delphiooLib)\ooScapeTranslate\code;$env(delphiooLib)\ooGeneric\code;$env(delphiooLib)\ooOS\code;$env(delphiooLib)\ooConsole\code;..\..\code;..\code;..\code\mock"/>
       <UnitOutputDirectory Value="..\build\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

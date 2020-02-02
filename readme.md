@@ -4,7 +4,7 @@
 # ooLog - Object pascal logger library
 Library to use a logger based in dynamic template definitions
 
-### Simple parse example
+### Text file log example
 ```pascal
 var
   TemplateFile, InfoTemplate: ITemplateLog;
@@ -33,6 +33,7 @@ Before all, run the batch "build_demo" to build proyect. Then go to the folder "
 * [ooParser](https://github.com/VencejoSoftware/ooParser.git) - Object pascal base parser
 * [ooTemplateParser](https://github.com/VencejoSoftware/ooTemplateParser.git) - Object pascal template parser library
 * [ooScapeTranslate](https://github.com/VencejoSoftware/ooScapeTranslate.git) - Object pascal scape translate
+* [ooConsole](https://github.com/VencejoSoftware/ooConsole.git) - Object pascal console handler
 
 ## Built With
 * [Delphi&reg;](https://www.embarcadero.com/products/rad-studio) - Embarcadero&trade; commercial IDE

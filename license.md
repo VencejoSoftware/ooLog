@@ -1,6 +1,6 @@
 Modified BSD License (BSD)
 =====================
-Copyright (c) 2016, Vencejo Software
+Copyright (c) 2020, Vencejo Software
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

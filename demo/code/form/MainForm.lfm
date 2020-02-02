@@ -1,110 +1,109 @@
 object MainForm: TMainForm
-  Left = 0
-  Top = 0
+  Left = 7
+  Height = 262
+  Top = 114
+  Width = 601
   Caption = 'Form2'
   ClientHeight = 262
   ClientWidth = 601
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
-  PixelsPerInch = 96
-  TextHeight = 13
+  LCLVersion = '2.0.0.4'
   object btnLog: TButton
     Left = 8
+    Height = 25
     Top = 8
     Width = 90
-    Height = 25
     Caption = 'Log Text'
-    TabOrder = 0
     OnClick = btnLogClick
+    TabOrder = 0
   end
   object btnError: TButton
     Left = 8
+    Height = 25
     Top = 39
     Width = 90
-    Height = 25
     Caption = 'Log Error'
-    TabOrder = 1
     OnClick = btnErrorClick
+    TabOrder = 1
   end
   object btnDebug: TButton
     Left = 8
+    Height = 25
     Top = 101
     Width = 90
-    Height = 25
     Caption = 'Log Debug'
-    TabOrder = 2
     OnClick = btnDebugClick
+    TabOrder = 2
   end
   object btnWarning: TButton
     Left = 8
+    Height = 25
     Top = 70
     Width = 90
-    Height = 25
     Caption = 'Log Warning'
-    TabOrder = 3
     OnClick = btnWarningClick
+    TabOrder = 3
   end
-  object gbLevelFilter: TGroupBox
+  object gbSeverityFilter: TGroupBox
     Left = 8
-    Top = 132
-    Width = 90
     Height = 124
-    Caption = 'Level Filter'
+    Top = 130
+    Width = 90
+    Caption = 'Severity Filter'
+    ClientHeight = 106
+    ClientWidth = 86
     TabOrder = 4
-    object chkLevelLog: TCheckBox
+    object chkSeverityLog: TCheckBox
       Left = 16
+      Height = 19
       Top = 22
-      Width = 70
-      Height = 17
-      Caption = 'Log'
+      Width = 51
+      Caption = 'Debug'
+      OnClick = OnUpdateFilterSet
       TabOrder = 0
-      OnClick = OnUpdateFilterSet
     end
-    object chkLevelInfo: TCheckBox
+    object chkSeverityInfo: TCheckBox
       Left = 16
+      Height = 19
       Top = 45
-      Width = 70
-      Height = 17
+      Width = 40
       Caption = 'Info'
+      OnClick = OnUpdateFilterSet
       TabOrder = 1
-      OnClick = OnUpdateFilterSet
     end
-    object chkLevelWarning: TCheckBox
+    object chkSeverityWarning: TCheckBox
       Left = 16
+      Height = 19
       Top = 68
-      Width = 70
-      Height = 17
+      Width = 60
       Caption = 'Warning'
+      OnClick = OnUpdateFilterSet
       TabOrder = 2
-      OnClick = OnUpdateFilterSet
     end
-    object chkLevelError: TCheckBox
+    object chkSeverityError: TCheckBox
       Left = 16
+      Height = 19
       Top = 91
-      Width = 70
-      Height = 17
+      Width = 44
       Caption = 'Error'
-      TabOrder = 3
       OnClick = OnUpdateFilterSet
+      TabOrder = 3
     end
   end
   object LogMemo: TMemo
     Left = 112
+    Height = 246
     Top = 8
     Width = 481
-    Height = 246
     Align = alCustom
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    Font.Charset = ANSI_CHARSET
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Font.CharSet = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Courier New'
-    Font.Style = []
     ParentFont = False
     ReadOnly = True
     ScrollBars = ssBoth
@@ -113,7 +112,7 @@ object MainForm: TMainForm
   object Timer1: TTimer
     Interval = 350
     OnTimer = Timer1Timer
-    Left = 536
-    Top = 216
+    left = 536
+    top = 216
   end
 end

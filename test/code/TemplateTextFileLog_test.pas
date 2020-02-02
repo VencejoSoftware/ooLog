@@ -3,27 +3,26 @@
   Distributed under the terms of the Modified BSD License
   The full license is distributed with this software
 }
-unit TextFileLog_test;
+unit TemplateTextFileLog_test;
 
 interface
 
 uses
   Classes, SysUtils,
+  InsensitiveTextMatch,
   LogMock,
+  ScapeTranslate,
   Log,
-  TextFileLog,
+  TemplateLog,
+  TemplateTextFileLog,
 {$IFDEF FPC}
-  fpcunit, testregistry,
-  RegExpr
+  fpcunit, testregistry
 {$ELSE}
-  TestFramework,
-  RegularExpressions
+  TestFramework
 {$ENDIF};
 
 type
-  TTextFileLogTest = class sealed(TTestCase)
-  const
-    DATE_TIME_REGEX = '(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2}).(\d{3})';
+  TTemplateTextFileLogTest = class sealed(TTestCase)
   strict private
     _Log: ILog;
     _FileTemp: String;
@@ -44,7 +43,7 @@ type
 
 implementation
 
-function TTextFileLogTest.FileLine(const Index: Byte): String;
+function TTemplateTextFileLogTest.FileLine(const Index: Byte): String;
 var
   Strings: TStringList;
 begin
@@ -57,7 +56,7 @@ begin
   end;
 end;
 
-function TTextFileLogTest.CountLines: Byte;
+function TTemplateTextFileLogTest.CountLines: Byte;
 var
   Strings: TStringList;
 begin
@@ -70,47 +69,31 @@ begin
   end;
 end;
 
-procedure TTextFileLogTest.WriteDebugReturnFileLine1;
+procedure TTemplateTextFileLogTest.WriteDebugReturnFileLine1;
 begin
   _Log.Write('Debug text', Debug);
-{$IFDEF FPC}
-  CheckTrue(TRegExpr.Create(DATE_TIME_REGEX + '\[DEBUG\]Debug text').Exec(FileLine(0)));
-{$ELSE}
-  CheckTrue(TRegEx.Create(DATE_TIME_REGEX + '\[DEBUG\]Debug text').IsMatch(FileLine(0)));
-{$ENDIF}
+  CheckEquals('[DEBUG]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Debug text', FileLine(0));
 end;
 
-procedure TTextFileLogTest.WriteInfoReturnFileLine2;
+procedure TTemplateTextFileLogTest.WriteInfoReturnFileLine2;
 begin
   _Log.Write('Info text', Info);
-{$IFDEF FPC}
-  CheckTrue(TRegExpr.Create(DATE_TIME_REGEX + '\[INFO\]Info text').Exec(FileLine(1)));
-{$ELSE}
-  CheckTrue(TRegEx.Create(DATE_TIME_REGEX + '\[INFO\]Info text').IsMatch(FileLine(1)));
-{$ENDIF}
+  CheckEquals('[INFO]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Info text', FileLine(1));
 end;
 
-procedure TTextFileLogTest.WriteWarningReturnFileLine3;
+procedure TTemplateTextFileLogTest.WriteWarningReturnFileLine3;
 begin
   _Log.Write('Warning text', Warning);
-{$IFDEF FPC}
-  CheckTrue(TRegExpr.Create(DATE_TIME_REGEX + '\[WARNING\]Warning text').Exec(FileLine(2)));
-{$ELSE}
-  CheckTrue(TRegEx.Create(DATE_TIME_REGEX + '\[WARNING\]Warning text').IsMatch(FileLine(2)));
-{$ENDIF}
+  CheckEquals('[WARNING]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Warning text', FileLine(2));
 end;
 
-procedure TTextFileLogTest.WriteErroReturnFileLine4;
+procedure TTemplateTextFileLogTest.WriteErroReturnFileLine4;
 begin
   _Log.Write('Error text', Error);
-{$IFDEF FPC}
-  CheckTrue(TRegExpr.Create(DATE_TIME_REGEX + '\[ERROR\]Error text').Exec(FileLine(3)));
-{$ELSE}
-  CheckTrue(TRegEx.Create(DATE_TIME_REGEX + '\[ERROR\]Error text').IsMatch(FileLine(3)));
-{$ENDIF}
+  CheckEquals('[ERROR]>>' + FormatDateTime('dd/mm/yyyy', Date) + ' Error text', FileLine(3));
 end;
 
-procedure TTextFileLogTest.ChangeFilterToErrorNotLogInFile;
+procedure TTemplateTextFileLogTest.ChangeFilterToErrorNotLogInFile;
 begin
   _Log.ChangeFilter([Error]);
   _Log.Write('Debug skipped', Debug);
@@ -121,7 +104,7 @@ begin
   CheckEquals(4, CountLines);
 end;
 
-procedure TTextFileLogTest.RemoveInfoReturnDebugErrorWarningFilter;
+procedure TTemplateTextFileLogTest.RemoveInfoReturnDebugErrorWarningFilter;
 begin
   _Log.ChangeFilter([Error, Warning, Debug]);
   CheckTrue(Error in _Log.Filter);
@@ -130,14 +113,18 @@ begin
   CheckFalse(Info in _Log.Filter);
 end;
 
-procedure TTextFileLogTest.SetUp;
+procedure TTemplateTextFileLogTest.SetUp;
+var
+  TemplateFile, InfoTemplate: ITemplateLog;
 begin
   inherited;
-  _Log := TTextFileLog.New(TLogFileNameFactory.New('.\error.log'));
-  _FileTemp := '.\error.log';
+  TemplateFile := TTemplateLog.New('{AppPath}test.log', TInsensitiveTextMatch.New);
+  InfoTemplate := TTemplateLog.New('{App}[{Severity}]>>{Date} {TEXT}', TInsensitiveTextMatch.New);
+  _Log := TTemplateTextFileLog.New(TemplateFile, InfoTemplate);
+  _FileTemp := TemplateFile.Build;
 end;
 
-destructor TTextFileLogTest.Destroy;
+destructor TTemplateTextFileLogTest.Destroy;
 begin
   if FileExists(_FileTemp) then
     DeleteFile(_FileTemp);
@@ -146,6 +133,6 @@ end;
 
 initialization
 
-RegisterTest(TTextFileLogTest {$IFNDEF FPC}.Suite {$ENDIF});
+RegisterTest(TTemplateTextFileLogTest {$IFNDEF FPC}.Suite {$ENDIF});
 
 end.
