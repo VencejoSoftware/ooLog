@@ -11,6 +11,7 @@ uses
   Classes, SysUtils,
   LogMock,
   Log,
+  LogFileNameFactory,
   TextFileLog,
 {$IFDEF FPC}
   fpcunit, testregistry,

@@ -98,6 +98,12 @@
         <DCCReference Include="..\code\TemplateTextFileLog_test.pas"/>
         <DCCReference Include="..\..\code\ConsoleLog.pas"/>
         <DCCReference Include="..\..\code\MultipleLog.pas"/>
+        <DCCReference Include="..\..\code\LogFileNameFactory.pas"/>
+        <DCCReference Include="..\code\LogFileNameFactory_test.pas"/>
+        <DCCReference Include="..\..\code\LogFileUniqueNameFactory.pas"/>
+        <DCCReference Include="..\..\code\LogFileTemplatedNameFactory.pas"/>
+        <DCCReference Include="..\code\LogFileTemplatedNameFactory_test.pas"/>
+        <DCCReference Include="..\code\LogFileUniqueNameFactory_test.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

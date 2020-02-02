@@ -24,7 +24,13 @@ uses
   TemplateTextFileLog in '..\..\code\TemplateTextFileLog.pas',
   TemplateTextFileLog_test in '..\code\TemplateTextFileLog_test.pas',
   ConsoleLog in '..\..\code\ConsoleLog.pas',
-  MultipleLog in '..\..\code\MultipleLog.pas';
+  MultipleLog in '..\..\code\MultipleLog.pas',
+  LogFileNameFactory in '..\..\code\LogFileNameFactory.pas',
+  LogFileNameFactory_test in '..\code\LogFileNameFactory_test.pas',
+  LogFileUniqueNameFactory in '..\..\code\LogFileUniqueNameFactory.pas',
+  LogFileTemplatedNameFactory in '..\..\code\LogFileTemplatedNameFactory.pas',
+  LogFileTemplatedNameFactory_test in '..\code\LogFileTemplatedNameFactory_test.pas',
+  LogFileUniqueNameFactory_test in '..\code\LogFileUniqueNameFactory_test.pas';
 
 {R *.RES}
 
