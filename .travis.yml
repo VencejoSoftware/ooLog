@@ -24,7 +24,6 @@ before_install:
   - git clone https://github.com/VencejoSoftware/ooBatch.git ${delphiooLib}/ooBatch
   - chmod +x ${delphiooLib}/ooBatch/code/.travis.install.py
   - git clone https://github.com/VencejoSoftware/generics.collections.git ${delphiooLib}/generics.collections
-  - git clone https://github.com/VencejoSoftware/ooBatch.git ${delphiooLib}/ooBatch
   - git clone https://github.com/VencejoSoftware/ooGeneric.git ${delphiooLib}/ooGeneric
   - git clone https://github.com/VencejoSoftware/ooText.git ${delphiooLib}/ooText
   - git clone https://github.com/VencejoSoftware/ooOS.git ${delphiooLib}/ooOS
