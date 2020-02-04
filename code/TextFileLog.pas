@@ -145,7 +145,7 @@ var
 begin
   if not (Severity in _Filter) then
     Exit;
-  _CriticalSection.Enter;
+  _CriticalSection.Acquire;
   try
     ErrorCount := 0;
     repeat
@@ -164,7 +164,7 @@ begin
       end;
     until (ErrorCount <= 10);
   finally
-    _CriticalSection.Leave;
+    _CriticalSection.Release;
   end;
 end;
 
@@ -190,8 +190,6 @@ end;
 
 destructor TTextFileLog.Destroy;
 begin
-  _CriticalSection.Enter;
-  _CriticalSection.Leave;
   _CriticalSection.Free;
   inherited;
 end;

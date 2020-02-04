@@ -42,11 +42,8 @@ type
     @param(BackColor Pointer to background color to change)
   )
   @member(
-    Create Object constructor, preparing critical section
+    Create Object constructor
     @param(FilePath File path to use)
-  )
-  @member(
-    Destroy Object destructor, free critical section
   )
   @member(
     New Create a new @classname as interface
