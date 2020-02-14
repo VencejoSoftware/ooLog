@@ -53,8 +53,8 @@ implementation
 
 function TLogFileTemplatedNameFactory.Build: String;
 begin
-  Result := Format('%s%s%s', [ChangeFileExt(ExtractFileName(_BaseName), EmptyStr), FormatDateTime(_Mask, Now),
-    ExtractFileExt(_BaseName)]);
+  Result := Format('%s%s%s%s', [ExtractFilePath(_BaseName), ChangeFileExt(ExtractFileName(_BaseName), EmptyStr),
+    FormatDateTime(_Mask, Now), ExtractFileExt(_BaseName)]);
 end;
 
 constructor TLogFileTemplatedNameFactory.Create(const BaseName: String; const Mask: String);
