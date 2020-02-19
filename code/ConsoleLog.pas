@@ -87,8 +87,8 @@ end;
 function TConsoleLog.SanitizeText(const Text: String): String;
 begin
   Result := Text;
-  Result := StringReplace(Result, #10, '', [rfReplaceAll]);
-  Result := StringReplace(Result, #13, '\n', [rfReplaceAll]);
+  Result := StringReplace(Result, #10, '\n', [rfReplaceAll]);
+  Result := StringReplace(Result, #13, '\r', [rfReplaceAll]);
   Result := Result + sLineBreak;
 end;
 
