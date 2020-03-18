@@ -16,7 +16,7 @@ interface
 
 uses
   SysUtils, SyncObjs,
-  Console, ConsoleColor,
+  Console, StackedConsole, ConsoleColor, ConsoleWriteTagCommand,
   Log;
 
 type
@@ -54,7 +54,7 @@ type
   TConsoleLog = class sealed(TInterfacedObject, ILog)
   strict private
     _Filter: TLogSeverityFilter;
-    _Console: IConsole;
+    _Console: IStackedConsole;
     _OnApplyConsoleTextTagStyle: TOnApplyConsoleTextTagStyle;
 {$IFDEF FPC}
     _OnApplyConsoleTextTagStyleOfObject: TOnApplyConsoleTextTagStyleOfObject;
@@ -115,18 +115,18 @@ begin
     Exit;
   _Console.WriteStyledText(FormatDateTime('dd/mm/yyyy hh:nn:ss.zzz', Now), DarkGray, Null);
 {$IFDEF FPC}
-  _Console.WriteTaggedText(Format('[%s]%s', [Severity.ToString, SanitizeText(Text)]), '[', ']', nil,
-    OnApplyConsoleTextTagStyle);
+  _Console.RunCommand(TWriteTagCommand.New(Format('[%s]%s', [Severity.ToString, SanitizeText(Text)]), '[', ']',
+    nil, _OnApplyConsoleTextTagStyleOfObject));
 {$ELSE}
-  _Console.WriteTaggedText(Format('[%s]%s', [Severity.ToString, SanitizeText(Text)]), '[', ']',
-    OnApplyConsoleTextTagStyle);
+  _Console.RunCommand(TWriteTagCommand.New(Format('[%s]%s', [Severity.ToString, SanitizeText(Text)]), '[', ']',
+    OnApplyConsoleTextTagStyle));
 {$ENDIF}
 end;
 
 constructor TConsoleLog.Create(const OnApplyConsoleTextTagStyle: TOnApplyConsoleTextTagStyle
 {$IFDEF FPC}; const OnStyleOfObject: TOnApplyConsoleTextTagStyleOfObject{$ENDIF});
 begin
-  _Console := TConsole.New;
+  _Console := TStackedConsole.New;
   ChangeFilter([Debug, Info, Warning, Error]);
   _OnApplyConsoleTextTagStyle := OnApplyConsoleTextTagStyle;
 {$IFDEF FPC}
