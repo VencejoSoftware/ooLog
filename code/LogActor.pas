@@ -32,23 +32,29 @@ type
   @member(
     WriteDebug Log text in debug severity
     @param(Text Text to write)
+    @param(Action Action identifier)
   )
   @member(
     WriteInfo Log text in info severity
     @param(Text Text to write)
+    @param(Action Action identifier)
+
   )
   @member(
     WriteException Write error text based on exception object
     @param(Error Exception object)
     @param(RaiseException Raise exception after log)
+    @param(Action Action identifier)
   )
   @member(
     WriteError Log text in error severity
     @param(Text Text to write)
+    @param(Action Action identifier)
   )
   @member(
     WriteWarning Log text in warning severity
     @param(Text Text to write)
+    @param(Action Action identifier)
   )
 }
 {$ENDREGION}
@@ -56,11 +62,11 @@ type
     ['{8C88DA51-EC30-42AD-8CEE-B0731926E110}']
     function LogEnabled: Boolean;
     function Log: ILog;
-    procedure WriteDebug(const Text: String);
-    procedure WriteInfo(const Text: String);
-    procedure WriteException(const Error: Exception; const RaiseException: Boolean);
-    procedure WriteError(const Text: String);
-    procedure WriteWarning(const Text: String);
+    procedure WriteDebug(const Text: String; const Action: String = '');
+    procedure WriteInfo(const Text: String; const Action: String = '');
+    procedure WriteException(const Error: Exception; const RaiseException: Boolean; const Action: String = '');
+    procedure WriteError(const Text: String; const Action: String = '');
+    procedure WriteWarning(const Text: String; const Action: String = '');
   end;
 
 {$REGION 'documentation'}
@@ -77,6 +83,7 @@ type
     WriteLog Parse and write log text
     @param(Text Text to log)
     @param(Severity Severity of log)
+    @param(Action Action identifier)
   )
   @member(
     Create Object constructor
@@ -93,15 +100,15 @@ type
   strict private
     _Logger: ILog;
   private
-    procedure WriteLog(const Text: String; const Severity: TLogSeverity);
+    procedure WriteLog(const Text: String; const Severity: TLogSeverity; const Action: String = '');
   public
     function LogEnabled: Boolean;
     function Log: ILog;
-    procedure WriteDebug(const Text: String);
-    procedure WriteInfo(const Text: String);
-    procedure WriteException(const Error: Exception; const RaiseException: Boolean);
-    procedure WriteError(const Text: String);
-    procedure WriteWarning(const Text: String);
+    procedure WriteDebug(const Text: String; const Action: String = '');
+    procedure WriteInfo(const Text: String; const Action: String = '');
+    procedure WriteException(const Error: Exception; const RaiseException: Boolean; const Action: String = '');
+    procedure WriteError(const Text: String; const Action: String = '');
+    procedure WriteWarning(const Text: String; const Action: String = '');
     constructor Create(const Log: ILog); virtual;
     class function New(const Log: ILog): ILogActor;
   end;
@@ -118,37 +125,37 @@ begin
   Result := Log <> nil;
 end;
 
-procedure TLogActor.WriteLog(const Text: String; const Severity: TLogSeverity);
+procedure TLogActor.WriteLog(const Text: String; const Severity: TLogSeverity; const Action: String = '');
 begin
   if LogEnabled then
-    Log.Write(Text, Severity);
+    Log.Write('<' + Action + '>' + Text, Severity);
 end;
 
-procedure TLogActor.WriteInfo(const Text: String);
+procedure TLogActor.WriteInfo(const Text: String; const Action: String = '');
 begin
-  WriteLog(Text, Info);
+  WriteLog(Text, Info, Action);
 end;
 
-procedure TLogActor.WriteDebug(const Text: String);
+procedure TLogActor.WriteDebug(const Text: String; const Action: String = '');
 begin
-  WriteLog(Text, Debug);
+  WriteLog(Text, Debug, Action);
 end;
 
-procedure TLogActor.WriteWarning(const Text: String);
+procedure TLogActor.WriteWarning(const Text: String; const Action: String = '');
 begin
-  WriteLog(Text, Warning);
+  WriteLog(Text, Warning, Action);
 end;
 
-procedure TLogActor.WriteException(const Error: Exception; const RaiseException: Boolean);
+procedure TLogActor.WriteException(const Error: Exception; const RaiseException: Boolean; const Action: String = '');
 begin
-  WriteLog(Error.Message, TLogSeverity.Error);
+  WriteLog(Error.Message, TLogSeverity.Error, Action);
   if RaiseException then
     raise ExceptClass(Error.ClassType).Create(Error.Message);
 end;
 
-procedure TLogActor.WriteError(const Text: String);
+procedure TLogActor.WriteError(const Text: String; const Action: String = '');
 begin
-  WriteLog(Text, TLogSeverity.Error);
+  WriteLog(Text, TLogSeverity.Error, Action);
 end;
 
 constructor TLogActor.Create(const Log: ILog);
