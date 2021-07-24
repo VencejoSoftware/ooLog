@@ -98,8 +98,12 @@ begin
 end;
 
 procedure TMultipleLog.ChangeFilter(const Filter: TLogSeverityFilter);
+var
+  Log: ILog;
 begin
   _Filter := Filter;
+  for Log in _Logs do
+    Log.ChangeFilter(Filter);
 end;
 
 procedure TMultipleLog.Write(const Text: String; const Severity: TLogSeverity);
@@ -114,8 +118,8 @@ end;
 
 constructor TMultipleLog.Create;
 begin
-  ChangeFilter([Debug, Info, Warning, Error]);
   _Logs := TLogList.New;
+  ChangeFilter([Debug, Info, Warning, Error]);
 end;
 
 class function TMultipleLog.New: IMultipleLog;
