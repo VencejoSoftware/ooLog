@@ -15,7 +15,7 @@ unit Log;
 interface
 
 uses
-  SysUtils;
+  SysUtils, Types, StrUtils;
 
 type
 {$REGION 'documentation'}
@@ -64,7 +64,7 @@ type
 
 {$REGION 'documentation'}
 {
-  @abstract(Severity helper for cast data types)
+  @abstract(Severity helper for data types conversion)
   @member(ToString Cast severity enum to string)
   @member(
     FromString Tries to get enum value from string. Raise error if not match
@@ -77,6 +77,25 @@ type
   strict private
   const
     SEVERITY_TEXT: array [TLogSeverity] of string = ('DEBUG', 'INFO', 'WARNING', 'ERROR');
+  public
+    function ToString: string;
+    procedure FromString(const Text: String);
+  end;
+
+  {$REGION 'documentation'}
+{
+  @abstract(Severity filter helper for data types conversion)
+  @member(ToString Cast severity filter set to string)
+  @member(
+    FromString Tries to get all enum item from a string. Raise error if not match
+    @param(Text String to convert)
+  )
+}
+{$ENDREGION}
+  TLogSeverityFilterHelper = record helper for TLogSeverityFilter
+  strict private
+  const
+    ITEM_SEPARATOR = ',';
   public
     function ToString: string;
     procedure FromString(const Text: String);
@@ -131,6 +150,38 @@ end;
 function TLogSeverityHelper.ToString: string;
 begin
   Result := SEVERITY_TEXT[Self];
+end;
+
+{ TLogSeverityFilterHelper }
+
+procedure TLogSeverityFilterHelper.FromString(const Text: String);
+var
+  Items: TStringDynArray;
+  Item: String;
+  LogSeverity: TLogSeverity;
+begin
+  Self := [];
+  Items := SplitString(Text, ITEM_SEPARATOR);
+  for Item in Items do
+    if Length(Trim(Item)) > 0 then
+    begin
+      LogSeverity.FromString(Trim(Item));
+      Include(Self, LogSeverity);
+    end;
+end;
+
+function TLogSeverityFilterHelper.ToString: string;
+var
+  Item: TLogSeverity;
+begin
+  Result := EmptyStr;
+  for Item := Low(TLogSeverity) to High(TLogSeverity) do
+    if Item in Self then
+    begin
+      if Result <> EmptyStr then
+        Result := Result + ITEM_SEPARATOR;
+      Result := Result + Item.ToString
+    end;
 end;
 
 end.
